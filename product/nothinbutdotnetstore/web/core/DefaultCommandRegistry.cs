@@ -14,7 +14,9 @@ namespace nothinbutdotnetstore.web.core
 
         public RequestCommand get_command_that_can_run(Request request)
         {
-            return all_commands.First(x => x.can_process(request));
+            var requestCommand =  all_commands.FirstOrDefault(x => x.can_process(request));
+            return requestCommand ?? new MissingRequestCommand();
+
         }
     }
 }
