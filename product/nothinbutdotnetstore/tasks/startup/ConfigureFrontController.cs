@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using nothinbutdotnetstore.infrastructure.containers;
 using nothinbutdotnetstore.web.core;
 using nothinbutdotnetstore.web.core.stubs;
 
@@ -8,29 +6,21 @@ namespace nothinbutdotnetstore.tasks.startup
 {
     public class ConfigureFrontController : StartupCommand
     {
-        IDictionary<Type, DependencyFactory> all_factories;
+        ComponentRegistrationProvider component_registration_provider;
 
-        public ConfigureFrontController(IDictionary<Type, DependencyFactory> all_factories)
+        public ConfigureFrontController(ComponentRegistrationProvider component_registration_provider)
         {
-            this.all_factories = all_factories;
+            this.component_registration_provider = component_registration_provider;
         }
 
         public void run()
         {
-            add_factory<FrontController, DefaultFrontController>();
-            add_factory<IEnumerable<RequestCommand>, StubSetOfCommands>();
-            add_factory<RequestFactory, StubRequestFactory>();
-            add_factory<CommandRegistry, DefaultCommandRegistry>();
-            add_factory<TemplateRegistry, StubTemplateRegistry>();
-            add_factory<Renderer, DefaultRenderer>();
-        }
-
-
-        void add_factory<Contract, Implementation>()
-        {
-            //TODO - Need to inject the constructor strategy
-            all_factories.Add(typeof(Contract), new AutomaticDependencyFactory(Container.fetch.a<DependencyContainer>(),
-                                                                               null, typeof(Implementation)));
+            component_registration_provider.register<FrontController, DefaultFrontController>();
+            component_registration_provider.register<IEnumerable<RequestCommand>, StubSetOfCommands>();
+            component_registration_provider.register<RequestFactory, StubRequestFactory>();
+            component_registration_provider.register<CommandRegistry, DefaultCommandRegistry>();
+            component_registration_provider.register<TemplateRegistry, StubTemplateRegistry>();
+            component_registration_provider.register<Renderer, DefaultRenderer>();
         }
     }
 }
