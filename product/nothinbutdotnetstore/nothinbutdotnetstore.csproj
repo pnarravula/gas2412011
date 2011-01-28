@@ -74,6 +74,7 @@
     <Compile Include="tasks\startup\DependencyFactories.cs" />
     <Compile Include="tasks\startup\Startup.cs" />
     <Compile Include="tasks\startup\StartupCommand.cs" />
+    <Compile Include="tasks\startup\StartupCommandFactory.cs" />
     <Compile Include="tasks\StoreCatalogController.cs" />
     <Compile Include="tasks\stubs\StubCatalog.cs" />
     <Compile Include="web\application\catalogbrowsing\Blah.cs" />
