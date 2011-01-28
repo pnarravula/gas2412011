@@ -4,10 +4,10 @@ namespace nothinbutdotnetstore.tasks.startup
     {
         public static void run()
         {
-            Start.by<ConfigureCoreComponents>()
-                .then_by<ConfigureFrontController>()
-                .then_by<ConfigureServiceLayer>()
-                .finish_by<ConfigureApplicationCommands>();
+//            Start.by<ConfigureCoreComponents>()
+//                .then_by<ConfigureFrontController>()
+//                .then_by<ConfigureServiceLayer>()
+//                .finish_by<ConfigureApplicationCommands>();
         }
     }
 }

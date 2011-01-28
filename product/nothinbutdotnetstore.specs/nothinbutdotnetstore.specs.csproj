@@ -72,6 +72,7 @@
     <Compile Include="infrastructure\BasicDependencyContainerSpecs.cs" />
     <Compile Include="infrastructure\BasicDependencyFactorySpecs.cs" />
     <Compile Include="infrastructure\BasicDependencyRegistrySpecs.cs" />
+    <Compile Include="infrastructure\ComponentRegistrationProviderSpecs.cs" />
     <Compile Include="infrastructure\ContainerSpecs.cs" />
     <Compile Include="infrastructure\ExpressionSpecs.cs" />
     <Compile Include="MessageGeneratorSpecs.cs" />

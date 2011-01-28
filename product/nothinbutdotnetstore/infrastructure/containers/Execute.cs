@@ -2,14 +2,14 @@
 
 namespace nothinbutdotnetstore.infrastructure.containers
 {
-    public static class Execute<ReturnType>
+    public static class Execute
     {
-        public delegate ReturnType BlockOfCode();
+        public delegate ReturnType BlockOfCode<out ReturnType>();
         public delegate void NonValueReturningBlockOfCode();
         public delegate Exception ExceptionFactory(Exception ex);
 
 
-        public static void run(NonValueReturningBlockOfCode block_of_code, 
+        public static void with_custom_exception_throwing(NonValueReturningBlockOfCode block_of_code, 
             ExceptionFactory exception_factory)
         {
             try
@@ -22,13 +22,12 @@ namespace nothinbutdotnetstore.infrastructure.containers
             }
         }
 
-        public static ReturnType run(BlockOfCode t_block_of_code, 
+        public static ReturnType with_custom_exception_throwing<ReturnType>(BlockOfCode<ReturnType> t_block_of_code, 
             ExceptionFactory exception_factory)
         {
             ReturnType return_value = default(ReturnType);
 
-            //TODO - I want to understand this
-            run(() =>
+            with_custom_exception_throwing(() =>
             {
                 return_value = t_block_of_code();
             },exception_factory);

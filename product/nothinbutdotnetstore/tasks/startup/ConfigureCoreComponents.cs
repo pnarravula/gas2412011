@@ -15,9 +15,9 @@ namespace nothinbutdotnetstore.tasks.startup
         public void run()
         {
             var container =
-                new BasicDependencyContainer(new BasicDependencyRegistry(component_registration_provider.raw_factories));
+                new BasicDependencyContainer(new BasicDependencyRegistry(null));
             Container.facade_resolver = () => container;
-            component_registration_provider.register_instance<DependencyContainer>(container);
+            component_registration_provider.register<DependencyContainer>(container);
         }
     }
 }
