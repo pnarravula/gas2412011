@@ -75,6 +75,7 @@
     <Compile Include="infrastructure\ComponentRegistrationProviderSpecs.cs" />
     <Compile Include="infrastructure\ContainerSpecs.cs" />
     <Compile Include="infrastructure\ExpressionSpecs.cs" />
+    <Compile Include="infrastructure\StartupSpec.cs" />
     <Compile Include="MessageGeneratorSpecs.cs" />
     <Compile Include="tasks\StartupSpecs.cs" />
     <Compile Include="utility\BaseConcern.cs" />
