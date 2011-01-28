@@ -24,5 +24,7 @@ namespace nothinbutdotnetstore.specs.tasks
                 Container.fetch.a<RequestFactory>().ShouldNotBeNull();
             };
         }
+
+      
     }
 }
