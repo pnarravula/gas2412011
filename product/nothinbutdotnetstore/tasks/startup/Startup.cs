@@ -4,10 +4,7 @@ namespace nothinbutdotnetstore.tasks.startup
     {
         public static void run()
         {
-//            Start.by<ConfigureCoreComponents>()
-//                .then_by<ConfigureFrontController>()
-//                .then_by<ConfigureServiceLayer>()
-//                .finish_by<ConfigureApplicationCommands>();
+            Start.by_running_all_commands_in("startup_pipeline.txt");
         }
     }
 }

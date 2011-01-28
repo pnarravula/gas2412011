@@ -1,30 +1,18 @@
+using System;
 using System.Collections.Generic;
 
 namespace nothinbutdotnetstore.tasks.startup
 {
-    public class StartRunning
+    public class Start
     {
-        IList<StartupCommand> commands;
-        StartupCommandFactory startup_command_factory;
+        public static Func<StartupCommandFactory> command_factory_provider = () =>
+            new StartupCommandFactory(null);
 
-        public StartRunning(StartupCommandFactory startup_command_factory)
-        {
-            this.commands = commands;
-            this.startup_command_factory = startup_command_factory;
-        }
 
-        public void finish_by<CommandToRun>() where CommandToRun : StartupCommand
+        public static StartupCommandPipelineBuilder by<CommandType>() where CommandType : StartupCommand
         {
-            commands.Add(startup_command_factory.create_from(typeof(CommandToRun)));
-            run();
-        }
-
-        void run()
-        {
-            foreach (var startup_command in commands)
-            {
-                startup_command.run();
-            }
+            return new StartupCommandPipelineBuilder(new List<StartupCommand>()
+                                                     , command_factory_provider());
         }
     }
 }

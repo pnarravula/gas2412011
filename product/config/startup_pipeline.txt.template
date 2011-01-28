@@ -1,0 +1,4 @@
+﻿ConfigureCoreComponents
+ConfigureFrontController
+ConfigureServiceLayer
+ConfigureApplicationCommands

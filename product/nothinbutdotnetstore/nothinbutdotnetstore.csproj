@@ -70,6 +70,7 @@
     <Compile Include="tasks\startup\ConfigureFrontController.cs" />
     <Compile Include="tasks\startup\ConfigureServiceLayer.cs" />
     <Compile Include="tasks\startup\Start.cs" />
+    <Compile Include="tasks\startup\StartupCommandPipelineBuilder.cs" />
     <Compile Include="tasks\startup\DefaultComponentRegistrationProvider.cs" />
     <Compile Include="tasks\startup\DependencyFactories.cs" />
     <Compile Include="tasks\startup\Startup.cs" />

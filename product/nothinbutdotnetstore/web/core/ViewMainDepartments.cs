@@ -4,8 +4,8 @@ namespace nothinbutdotnetstore.web.core
 {
     public class ViewMainDepartments : ApplicationCommand
     {
-        Catalog repository;
-        Renderer renderer;
+        public Catalog repository;
+        public Renderer renderer;
 
         public ViewMainDepartments(Catalog repository, Renderer renderer)
         {
