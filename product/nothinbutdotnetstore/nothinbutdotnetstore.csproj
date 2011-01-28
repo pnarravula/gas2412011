@@ -64,7 +64,13 @@
     <Compile Include="infrastructure\documentation\RegistryAttribute.cs" />
     <Compile Include="MessageGenerator.cs" />
     <Compile Include="tasks\Catalog.cs" />
+    <Compile Include="tasks\startup\ComponentRegistrationProvider.cs" />
+    <Compile Include="tasks\startup\ConfigureApplicationCommands.cs" />
+    <Compile Include="tasks\startup\ConfigureCoreComponents.cs" />
+    <Compile Include="tasks\startup\ConfigureFrontController.cs" />
+    <Compile Include="tasks\startup\ConfigureServiceLayer.cs" />
     <Compile Include="tasks\startup\Startup.cs" />
+    <Compile Include="tasks\startup\StartupCommand.cs" />
     <Compile Include="tasks\StoreCatalogController.cs" />
     <Compile Include="tasks\stubs\StubCatalog.cs" />
     <Compile Include="web\application\catalogbrowsing\Blah.cs" />
