@@ -1,31 +1,35 @@
 using System;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 
 namespace nothinbutdotnetstore.infrastructure.containers
 {
+    public interface ConstructorSelection
+    {
+        ConstructorInfo get_applicable_constructor_on(Type type);
+    }
+
     public class AutomaticDependencyFactory : DependencyFactory
     {
         DependencyContainer container;
-        Type type;
+        ConstructorSelection constructor_selection;
+        Type type_to_create;
 
-        public AutomaticDependencyFactory(DependencyContainer container, Type type)
+        public AutomaticDependencyFactory(DependencyContainer container, ConstructorSelection constructor_selection, Type type_to_create)
         {
             this.container = container;
-            this.type = type;
+            this.type_to_create = type_to_create;
+            this.constructor_selection = constructor_selection;
         }
 
         public object create()
         {
-            var greediest_constructor = type.GetConstructors()
-                .OrderByDescending(x => x.GetParameters().Count())
-                .First();
+            var constructor_info = constructor_selection.get_applicable_constructor_on(type_to_create);
 
-            var arguments = greediest_constructor.GetParameters()
+            var arguments = constructor_info.GetParameters()
                 .Select(x => container.a(x.ParameterType));
 
-            return greediest_constructor.Invoke(arguments.ToArray());
-
+            return constructor_info.Invoke(arguments.ToArray());
         }
     }
 }

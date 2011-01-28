@@ -5,7 +5,7 @@ using nothinbutdotnetstore.infrastructure.containers;
 using nothinbutdotnetstore.tasks.stubs;
 using nothinbutdotnetstore.web.core;
 using nothinbutdotnetstore.web.core.stubs;
-
+using System.Linq;
 namespace nothinbutdotnetstore.tasks.startup
 {
     public class Startup
@@ -53,8 +53,8 @@ namespace nothinbutdotnetstore.tasks.startup
 		}
 
         private static void add_factory<Contract,Implementation>()
-		{
-            all_factories.Add(typeof(Contract), new AutomaticDependencyFactory(Container.fetch.a<DependencyContainer>(), typeof(Implementation)));
+        {
+            throw new NotImplementedException();
 		}
 
     }

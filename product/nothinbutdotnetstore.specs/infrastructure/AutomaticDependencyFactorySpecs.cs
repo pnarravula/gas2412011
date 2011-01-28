@@ -1,20 +1,19 @@
- using System;
- using System.Data;
- using System.Data.SqlClient;
- using System.Linq;
- using Machine.Specifications;
- using Machine.Specifications.DevelopWithPassion.Rhino;
- using nothinbutdotnetstore.infrastructure.containers;
- using Rhino.Mocks;
+using System.Data;
+using System.Data.SqlClient;
+using System.Reflection;
+using Machine.Specifications;
+using Machine.Specifications.DevelopWithPassion.Rhino;
+using nothinbutdotnetstore.infrastructure.containers;
+using nothinbutdotnetstore.specs.utility;
+using Rhino.Mocks;
 
 namespace nothinbutdotnetstore.specs.infrastructure
-{   
+{
     public class AutomaticDependencyFactorySpecs
     {
         public abstract class concern : Observes<DependencyFactory,
                                             AutomaticDependencyFactory>
         {
-        
         }
 
         [Subject(typeof(AutomaticDependencyFactory))]
@@ -23,14 +22,19 @@ namespace nothinbutdotnetstore.specs.infrastructure
             Establish c = () =>
             {
                 container = the_dependency<DependencyContainer>();
+                constructor =
+                    ExpressionUtility.get_constructor(() => new ComponentWithLotsOfDependencies(null, null, null));
+                constructor_selection_strategy = the_dependency<ConstructorSelection>();
+
                 the_sql_connection = new SqlConnection();
                 the_command = new SqlCommand();
                 the_other_dependency = new OtherDependency();
-
                 container.Stub(x => x.a(typeof(IDbConnection))).Return(the_sql_connection);
                 container.Stub(x => x.a(typeof(IDbCommand))).Return(the_command);
                 container.Stub(x => x.a(typeof(OtherDependency))).Return(the_other_dependency);
-
+                constructor_selection_strategy.Stub(
+                    x => x.get_applicable_constructor_on(typeof(ComponentWithLotsOfDependencies)))
+                    .Return(constructor);
                 provide_a_basic_sut_constructor_argument(typeof(ComponentWithLotsOfDependencies));
             };
 
@@ -43,7 +47,6 @@ namespace nothinbutdotnetstore.specs.infrastructure
                 item.connection.ShouldEqual(the_sql_connection);
                 item.command.ShouldEqual(the_command);
                 item.other.ShouldEqual(the_other_dependency);
-
             };
 
             static object result;
@@ -51,6 +54,8 @@ namespace nothinbutdotnetstore.specs.infrastructure
             static IDbCommand the_command;
             static OtherDependency the_other_dependency;
             static DependencyContainer container;
+            static ConstructorSelection constructor_selection_strategy;
+            static ConstructorInfo constructor;
         }
     }
 
@@ -62,11 +67,17 @@ namespace nothinbutdotnetstore.specs.infrastructure
 
         public IDbCommand command { get; set; }
 
-        public ComponentWithLotsOfDependencies(OtherDependency other, IDbConnection connection, IDbCommand command)
+        public ComponentWithLotsOfDependencies(IDbConnection connection, IDbCommand command)
         {
             this.other = other;
             this.connection = connection;
             this.command = command;
+        }
+
+        public ComponentWithLotsOfDependencies(OtherDependency other, IDbConnection connection, IDbCommand command)
+            : this(connection, command)
+        {
+            this.other = other;
         }
     }
 
