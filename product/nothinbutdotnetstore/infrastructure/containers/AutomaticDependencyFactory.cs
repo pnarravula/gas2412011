@@ -4,27 +4,25 @@ using System.Linq;
 
 namespace nothinbutdotnetstore.infrastructure.containers
 {
+    public delegate ConstructorInfo GetConstructor();
     public class AutomaticDependencyFactory : DependencyFactory
     {
         DependencyContainer container;
-        Type type;
+        GetConstructor get_constructor;
 
-        public AutomaticDependencyFactory(DependencyContainer container, Type type)
+        public AutomaticDependencyFactory(DependencyContainer container, GetConstructor get_constructor)
         {
             this.container = container;
-            this.type = type;
+            this.get_constructor = get_constructor;
         }
 
         public object create()
         {
-            var greediest_constructor = type.GetConstructors()
-                .OrderByDescending(x => x.GetParameters().Count())
-                .First();
-
-            var arguments = greediest_constructor.GetParameters()
+            var constructor_info = get_constructor();
+            var arguments = constructor_info.GetParameters()
                 .Select(x => container.a(x.ParameterType));
 
-            return greediest_constructor.Invoke(arguments.ToArray());
+            return constructor_info.Invoke(arguments.ToArray());
 
         }
     }
