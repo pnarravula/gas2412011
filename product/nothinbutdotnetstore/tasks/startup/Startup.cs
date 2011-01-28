@@ -54,10 +54,7 @@ namespace nothinbutdotnetstore.tasks.startup
 
         private static void add_factory<Contract,Implementation>()
         {
-            GetConstructor get_constructor =
-                () => typeof(Implementation).GetConstructors().OrderByDescending(c => c.GetParameters().Count()).First();
-
-            all_factories.Add(typeof(Contract), new AutomaticDependencyFactory(Container.fetch.a<DependencyContainer>(), get_constructor));
+            throw new NotImplementedException();
 		}
 
     }
